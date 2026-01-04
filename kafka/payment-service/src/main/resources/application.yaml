@@ -1,0 +1,23 @@
+server:
+  port: 8082
+
+spring:
+  kafka:
+    consumer:
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+
+      enable-auto-commit: false
+      auto-offset-reset: earliest
+
+      properties:
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+
+        # 🔥 CRITICAL FIX
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: com.kafka.payment_service.model.OrderEvent
+        spring.json.trusted.packages: "*"
+
+
+
